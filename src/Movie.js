@@ -1,53 +1,35 @@
-import React from 'react';
-import './Movie.css'; 
+import React from 'react'; //반드시 써줘야 movie라는 component를 사용할수 있다.
+import './Movie.css';
 import PropTypes from 'prop-types'
 
-function Movie({title,poster,genres,synopsis}){
-    return(
-        <div className="Movie">
-            <div className="Movie__Columns">
-            <MoviePoster poster={poster} alt={title}></MoviePoster>
+function Movie({ title, poster, summary, year, genres }) {
+    return (
+        <div className="movie">
+
+            <img src={poster} alt={title} title={title}></img>
+            <div className="movie__data">
+                <h3 className="movie__title">{title}</h3>
+                <h5 className="movie__year">{year}</h5>
+                <ul className="genres">
+                    {genres.map((genre,index) => (
+                        <li key={index} className="genres__genre">{genre}</li>
+                    ))}
+                </ul>
+                <p className="movie__summary">{summary.slice(0,140)}...</p>
+                
             </div>
-            
-            <div className="Movie__Columns">
-                <h1>{title}</h1>
-                <div className="Movie__Genres">
-                {genres.map((genre,index)=><MovieGenre genre={genre} key={index}/>)}
-
-                </div>
-                <p className="Movie__Synopsis">
-                    {synopsis}
-                </p>
-                </div>
-            
-
         </div>
     )
 }
-function MoviePoster({poster,alt}){
-    return (
-        <img  src={poster} alt={alt} title={alt} className="Movie__Poster"></img>
-    )
 
-}
-function MovieGenre({genre}){
-    return(
-    <span className="Movie__Genres">{genre} </span>
-    )
-}
 
- 
-Movie.propTypes={
+Movie.propTypes = {
     title: PropTypes.string.isRequired,
-    poster:PropTypes.string.isRequired,
-    genres:PropTypes.array.isRequired,
-    synopsis:PropTypes.string.isRequired
+    poster: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    summary: PropTypes.string.isRequired,
+    year: PropTypes.number.isRequired,
+    genres: PropTypes.arrayOf(PropTypes.string).isRequired
 }
-MoviePoster.propTypes={
-    poster:PropTypes.string.isRequired, 
-    alt:PropTypes.string.isRequired
-}
-MovieGenre.propTypes={
-    genres:PropTypes.string.isRequired
-}
-export default Movie
+
+export default Movie//export해줘야 사용가능하다.
